@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Education Perfect Window Modifier",
   "version": "1.0",
-  "description": "Makes the Education Perfect window always appear open and on top.",
+  "description": "Makes the Education Perfect window always appear open on top.",
   "permissions": [
     "activeTab",
     "webNavigation",
@@ -10,7 +10,7 @@
   ],
   "content_scripts": [
     {
-      "matches": ["*://app.educationperfect.com/*"],
+      "matches": ["*://*.app.educationperfect.com/*"],
       "js": ["content.js"]
     }
   ]
