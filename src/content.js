@@ -1,5 +1,4 @@
 // content.js
-// IF IT WORKS DONT TRY AND FIX IT
 function keepWindowActive() {
   // Simulate focus and visibility events
   window.addEventListener('blur', () => {
