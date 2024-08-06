@@ -1,4 +1,3 @@
-// content.js
 // IF IT WORKS DONT TRY AND FIX IT
 function keepWindowActive() {
   // Simulate focus and visibility events
@@ -29,5 +28,28 @@ function keepWindowActive() {
   }, 1000);
 }
 
-// Run the function to keep the window active
+// Function to toggle the keepWindowActive function
+let isActive = false;
+function toggleWindowActive(state) {
+  if (state) {
+    keepWindowActive();
+  } else {
+    location.reload(); // Reload the page to reset modifications
+  }
+}
+
+// Listener for messages from popup.js
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.action === 'turnOn') {
+    isActive = true;
+    toggleWindowActive(isActive);
+    console.log('Extension turned on');
+  } else if (request.action === 'turnOff') {
+    isActive = false;
+    toggleWindowActive(isActive);
+    console.log('Extension turned off');
+  }
+});
+
+// Initial run of the function to keep the window active
 keepWindowActive();
