@@ -28,28 +28,37 @@ function keepWindowActive() {
   }, 1000);
 }
 
-// Function to toggle the keepWindowActive function
 let isActive = false;
+let intervalId;
+
 function toggleWindowActive(state) {
   if (state) {
-    keepWindowActive();
+    if (!isActive) {
+      intervalId = keepWindowActive();
+      isActive = true;
+    }
   } else {
-    location.reload(); // Reload the page to reset modifications
+    if (isActive) {
+      clearInterval(intervalId);
+      location.reload(); // Reload the page to reset modifications
+      isActive = false;
+    }
   }
 }
 
-// Listener for messages from popup.js
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action === 'turnOn') {
-    isActive = true;
-    toggleWindowActive(isActive);
-    console.log('Extension turned on');
+    toggleWindowActive(true);
+    sendResponse({status: 'on'});
   } else if (request.action === 'turnOff') {
-    isActive = false;
-    toggleWindowActive(isActive);
-    console.log('Extension turned off');
+    toggleWindowActive(false);
+    sendResponse({status: 'off'});
+  } else if (request.action === 'getStatus') {
+    sendResponse({status: isActive ? 'on' : 'off'});
   }
 });
 
-// Initial run of the function to keep the window active
-keepWindowActive();
+// Run the function to keep the window active on load if needed
+if (isActive) {
+  toggleWindowActive(true);
+}
