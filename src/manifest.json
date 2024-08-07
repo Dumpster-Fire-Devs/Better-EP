@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Better-EP",
   "version": "1.1",
-  "description": "Makes the Education Perfect window think it is always open and on top.",
+  "description": "Enchances the Education Perfect experice for students.",
   "permissions": [
     "activeTab",
     "webNavigation",
